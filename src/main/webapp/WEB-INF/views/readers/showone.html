@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content="text/html; charset=UTF-8" />
+    <title>Читатель</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+
+<body>
+    <header data-th-insert="fragments/general.html :: header"></header>
+    <div>Читатель</div>
+    <div>
+        <p data-th-text="${reader.getFullName()}" style="display: inline;"></p>
+        <p data-th-text="${reader.getBirthDate()}" style="display: inline;"></p>
+    </div>
+    <div data-th-style="${book.getOverdue()} ? 'color: red;'" data-th-each="book : ${reader.getBooks}">
+        <a data-th-href="@{/books/{id}(id=${book.getId()})}" data-th-text="${book.getName()}">book</a>
+        <a data-th-href="@{/authors/{id}(id=${book.getAuthor().getId()})}" data-th-text="${book.getAuthor().getShortName()}">author</a>
+        <a data-th-text="${'взята ' + book.getTakenOn()}">takenOn</a>
+        <form data-th-method="PATCH" data-th-action="@{/books/releaseread/{id}(id=${book.getId()})}" style="display: inline">
+            <input type="hidden" name="readerId" data-th-value="${reader.getId()}">
+            <input type="submit" value="Вернуть книгу">
+        </form>
+    </div>
+    <br><br>
+    
+    <a data-th-href="@{/readers/edit/{id}(id = ${reader.getId()})}">Редактировать читателя</a>
+    <div data-th-replace="fragments/general.html :: footer"></div>
+</body>
+
+</html>

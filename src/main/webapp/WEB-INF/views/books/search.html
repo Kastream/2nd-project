@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content="text/html; charset=UTF-8" />
+    <title>Поиск книги</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+<header data-th-insert="fragments/general.html :: header"></header>
+
+    <form data-th-action = "@{/books/search}" data-th-method = "POST">
+        <label for="searchField">Введите запрос</label>
+        <input id="searchField" type="text" name="search">
+        <input type="submit" value="Искать!">
+    </form>
+
+    <div data-th-if="${books}">Найденные книги: </div>
+    <div data-th-each="book : ${books}">
+        <a data-th-href="@{/books/{id}(id=${book.getId()})}" data-th-text="${book.getName() + ', ' + book.getAuthor().getShortName() + ', ' + book.getYear()}">book</a>
+        <a data-th-if="${book.getReader()}" data-th-href="@{/readers/{id}(id=${book.getReader().getId()})}" style="display: inline;">взята</a>
+        <p data-th-if="!${book.getReader()}" style="display: inline;">свободна</p>
+    </div>
+    <div data-th-if="${books == null}">Книг не найдено</div>
+
+<div data-th-replace="fragments/general.html :: footer"></div>
+</body>
+</html>

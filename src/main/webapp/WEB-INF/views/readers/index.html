@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content="text/html; charset=UTF-8" />
+    <title>Читатели</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+<header data-th-insert="fragments/general.html :: header"></header>
+<div>Список наших читателей: </div>
+    <div data-th-each="reader : ${readers}">
+        <a data-th-href="@{/readers/{id}(id=${reader.getId()})}" data-th-text="${reader.getName() + ' ' + reader.getPatronymic() + ' ' + reader.getFamilyName()}">reader</a>
+    </div>
+    <br>
+    <p data-th-text="${'Текущая страница: ' + page}">page</p>
+    <div>
+        <a data-th-each="p : ${#numbers.sequence(1, total)}" style="display: inline;" data-th-href="@{/readers?p={page}(page=${p})}" data-th-text="${p}">pageSelect</a>
+    </div>
+    <div>
+        <a data-th-href="@{/readers/add}">Добавить нового читателя</a>
+    </div>
+    <div data-th-replace="fragments/general.html :: footer"></div>
+</body>
+</html>

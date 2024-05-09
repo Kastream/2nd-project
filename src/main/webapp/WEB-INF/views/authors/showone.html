@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content="text/html; charset=UTF-8" />
+    <title data-th-text="${author.getShortName()}">Автор</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+
+<body>
+    <header data-th-insert="fragments/general.html :: header"></header>
+    <div>Автор</div>
+    <div>
+        <p data-th-text="${author.getFullName()}"></p>
+    </div>
+    <div data-th-each="book : ${author.getBooks()}">
+        <a data-th-href="@{/books/{id}(id=${book.getId()})}" data-th-text="${book.getName()}">book</a>
+        <a data-th-if="${book.getReader()}" data-th-href="@{/readers/{id}(id=${book.getReader().getId()})}" style="display: inline;">взята</a>
+        <p data-th-if="!${book.getReader()}" style="display: inline;">свободна</p>
+    </div>
+    <br><br>
+    
+    <a data-th-href="@{/authors/edit/{id}(id = ${author.getId()})}">Редактировать автора</a>
+    <a data-th-href="@{/books/add/{id}(id = ${author.getId()})}">Добавить книгу</a>
+    <div data-th-replace="fragments/general.html :: footer"></div>
+
+</body>
+
+</html>

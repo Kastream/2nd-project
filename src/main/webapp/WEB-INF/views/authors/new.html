@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content="text/html; charset=UTF-8" />
+    <title>Добавление автора</title>
+</head>
+<body>
+    <header data-th-insert="fragments/general.html :: header"></header>
+    <div>Заполните данные автора</div>
+    <form data-th-method="POST" data-th-action="@{/authors/add}" data-th-object="${author}">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" data-th-field="*{name}">
+        <p data-th-if="${#fields.hasErrors('name')}" data-th-errors="*{name}">name error</p>
+        
+        <label for="patronymic">Отчество: </label>
+        <input type="text" id="patronymic" data-th-field="*{patronymic}" value="Englishtxt">
+        <p data-th-if="${#fields.hasErrors('patronymic')}" data-th-errors="*{patronymic}">patronymic error</p>
+        
+        <label for="familyName">Фамилия: </label>
+        <input type="text" id="familyName" data-th-field="*{familyName}">
+        <p data-th-if="${#fields.hasErrors('familyName')}" data-th-errors="*{familyName}">familyName error</p>
+        <br/>
+        <input type="submit" value="Создать">
+    </form>
+    <div data-th-replace="fragments/general.html :: footer"></div>
+</body>
+</html>

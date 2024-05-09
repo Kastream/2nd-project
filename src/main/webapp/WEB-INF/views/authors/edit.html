@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content="text/html; charset=UTF-8" />
+    <title>Правка автора</title>
+</head>
+<body>
+    <header data-th-insert="fragments/general.html :: header"></header>
+    <div>Заполните данные автора</div>
+    <form data-th-method="PATCH" data-th-action="@{/authors/edit}" data-th-object="${author}">
+        <input type="hidden" data-th-field="*{id}">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" data-th-field="*{name}">
+        <p data-th-if="${#fields.hasErrors('name')}" data-th-errors="*{name}">name error</p>
+        
+        <label for="patronymic">Отчество: </label>
+        <input type="text" id="patronymic" data-th-field="*{patronymic}" value="Englishtxt">
+        <p data-th-if="${#fields.hasErrors('patronymic')}" data-th-errors="*{patronymic}">patronymic error</p>
+        
+        <label for="familyName">Фамилия: </label>
+        <input type="text" id="familyName" data-th-field="*{familyName}">
+        <p data-th-if="${#fields.hasErrors('familyName')}" data-th-errors="*{familyName}">familyName error</p>
+      
+        <br/>
+        <input type="submit" value="Править">
+    </form>
+    <form data-th-method="DELETE" data-th-action="@{/authors}">
+        <input type="hidden" name="id" data-th-value="${author.getId()}">
+        <input type="submit" value="Удалить автора">
+        <p data-th-if="${error}">сначала удалите книги автора</p>
+    </form>
+    <div data-th-replace="fragments/general.html :: footer"></div>
+</body>
+</html>

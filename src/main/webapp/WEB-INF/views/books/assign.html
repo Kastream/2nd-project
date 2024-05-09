@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content="text/html; charset=UTF-8" />
+    <title>Выдать</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+
+<body>
+    <header data-th-insert="fragments/general.html :: header"></header>
+    <div>Книга</div>
+    <div>
+        <p data-th-text="${book.getName() + ', ' + book.getYear()}">book</p>
+        <a data-th-href="@{/authors/{id}(id=${book.getAuthor().getId()})}" data-th-text="${book.getAuthor().getShortName()}">author</a>
+    </div>
+    <form data-th-method="GET" data-th-action="@{/books/assign/{id}(id=${book.getId()})}">
+        <label for="searchField">Введите фамилию: </label>
+        <input id="searchField" type="text" name="search">
+        <input type="submit" value="Найти читателей">
+    </form>
+    <form data-th-if="${readers}"data-th-method="PATCH" data-th-action="@{/books/assign}" data-th-object="${reader}">
+        <input type="hidden" name="b_id" data-th-value="${book.getId()}">
+        <label for="select">Выберите читателя</label>
+        <ul id="select">
+            <li data-th-each="reader : ${readers}">
+                <input type="radio" name="readerSelect" data-th-field="*{id}" data-th-value="${reader.getId()}" data-th-text="${reader.getFullName() + ', ' + reader.getBirthDate()}">
+            </li>
+        </ul>
+
+        <!-- <select id="select" data-th-object="${reader}" data-th-field="*{id}">
+            <option data-th-each="reader : ${readers}" data-th-value="${reader.getId()}" data-th-text="${reader.getShortName()}"></option>
+        </select> -->
+        <input type="submit" value="Выдать">
+    </form>
+    <div data-th-replace="fragments/general.html :: footer"></div>
+</body>
+
+</html>

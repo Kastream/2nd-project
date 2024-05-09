@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content="text/html; charset=UTF-8" />
+    <title>Добавление книги</title>
+</head>
+<body>
+    <header data-th-insert="fragments/general.html :: header"></header>
+    <div>Заполните данные книги</div>
+    <form data-th-method="POST" data-th-action="@{/books/add}" data-th-object="${book}">
+        <label for="name">Название:</label>
+        <input type="text" id="name" data-th-field="*{name}">
+        <p data-th-if="${#fields.hasErrors('name')}" data-th-errors="*{name}">name error</p>
+        
+        <label for="year">Год печати: </label>
+        <input type="text" id="year" data-th-field="*{year}">
+        <p data-th-if="${#fields.hasErrors('year')}" data-th-errors="*{year}">year error</p>
+        
+        <div style="display: inline;" data-th-if="!${a_id}">
+            <label for="select">Автор: </label>
+            <select id="select" data-th-object="${book.author}" data-th-field="*{id}">
+                <option data-th-each="author : ${authors}" data-th-value="${author.getId()}" data-th-text="${author.getShortName()}"></option>
+            </select>
+            <p data-th-if="${#fields.hasErrors('author')}" data-th-errors="*{author}">author error</p>
+            <a data-th-href="@{/authors/new}">Добавить автора</a>
+        </div>
+        <div style="display: inline;" data-th-if="${a_id}">
+            <p data-th-text="${'Автор: ' + book.author.getShortName()}" style="display: inline;">author</p>
+            <input type="hidden" data-th-object="${book.author}" data-th-field="*{id}" data-th-value="${a_id}" id = "author">
+        </div>
+            <br/>
+            <input type="submit" value="Добавить">
+    </form>
+    <div data-th-replace="fragments/general.html :: footer"></div>
+</body>
+</html>

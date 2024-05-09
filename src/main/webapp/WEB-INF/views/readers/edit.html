@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content="text/html; charset=UTF-8" />
+    <title>Изменение читателя</title>
+</head>
+<body>
+    <header data-th-insert="fragments/general.html :: header"></header>
+    <div>Заполните данные читателя ниже</div>
+    <form data-th-method="PATCH" data-th-action="@{/readers/edit/}" data-th-object="${reader}">
+        <input type="hidden" data-th-field="*{id}">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" data-th-field="*{name}">
+        <p data-th-if="${#fields.hasErrors('name')}" data-th-errors="*{name}">name error</p>
+        
+        <label for="patronymic">Отчество: </label>
+        <input type="text" id="patronymic" data-th-field="*{patronymic}" value="Englishtxt">
+        <p data-th-if="${#fields.hasErrors('patronymic')}" data-th-errors="*{patronymic}">patronymic error</p>
+        
+        <label for="familyName">Фамилия: </label>
+        <input type="text" id="familyName" data-th-field="*{familyName}">
+        <p data-th-if="${#fields.hasErrors('familyName')}" data-th-errors="*{familyName}">familyName error</p>
+        
+        <label for="birthDate">Год рождения: </label>
+        <input type="text" id="birthDate" data-th-field="*{birthDate}">
+        <p data-th-if="${#fields.hasErrors('birthDate')}" data-th-errors="*{birthDate}">Date error</p>
+        
+        <br/>
+        <input type="submit" value="Редактировать">
+    </form>
+    <form data-th-method="DELETE" data-th-action="@{/readers}">
+        <input type="hidden" name="id" data-th-value="${reader.getId()}">
+        <input type="submit" value="Удалить читателя">
+        <p data-th-if="${error}">Сначала нужно вернуть/списать книги</p>
+    </form>
+    <div data-th-replace="fragments/general.html :: footer"></div>
+</body>
+</html>
